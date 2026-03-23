@@ -68,49 +68,38 @@ void loop() {
   }
   while(PS4.isConnected()){
       if(PS4.R2Value()>0 && PS4.L2Value()>0){
-
+        digitalWrite(MA1, LOW);
+        digitalWrite(MA2, LOW);
+        digitalWrite(MB1, LOW);
+        digitalWrite(MB2, LOW);
+        analogWrite(PWMA, 0);
+        analogWrite(PWMB, 0);
       } else {
-        if (PS4.R2Value()>0){
+        while(PS4.R2Value()>0){
           //  Setam motoarele pe directia inainte
           digitalWrite(MA1, HIGH);
           digitalWrite(MA2, LOW);
-          digitalWrite(MB1, HIGH);
-          digitalWrite(MB2, LOW);
+          digitalWrite(MB1, LOW);
+          digitalWrite(MB2, HIGH);
           //  Acceleram cu cat citim de la butonul R2 de pe controller
           analogWrite(PWMA, PS4.R2Value());
           analogWrite(PWMB, PS4.R2Value());
 
           Serial.printf("R2 is at %d\n", PS4.R2Value());
 
-        } else {
-          //  Oprim motoarele
-          digitalWrite(MA1, LOW);
-          digitalWrite(MA2, LOW);
-          digitalWrite(MB1, LOW);
-          digitalWrite(MB2, LOW);
-          analogWrite(PWMA, 0);
-          analogWrite(PWMB, 0);
         }
-          if(PS4.L2Value()>0){
+        while(PS4.L2Value()>0){
           //  Setam motoarele pe directia inapoi
           digitalWrite(MA1, LOW);
           digitalWrite(MA2, HIGH);
-          digitalWrite(MB1, LOW);
-          digitalWrite(MB2, HIGH);
+          digitalWrite(MB1, HIGH);
+          digitalWrite(MB2, LOW);
           //  Acceleram cu cat citim de la butonul L2 de pe controller
           analogWrite(PWMA, PS4.L2Value());
           analogWrite(PWMB, PS4.L2Value());
 
           Serial.printf("L2 is at %d\n", PS4.L2Value());
 
-        } else {
-          //  Oprim motoarele
-          digitalWrite(MA1, LOW);
-          digitalWrite(MA2, LOW);
-          digitalWrite(MB1, LOW);
-          digitalWrite(MB2, LOW);
-          analogWrite(PWMA, 0);
-          analogWrite(PWMB, 0);
         }
     }
   }
@@ -121,6 +110,4 @@ void loop() {
   digitalWrite(MB2, LOW);
   analogWrite(PWMA, 0);
   analogWrite(PWMB, 0);
-  
-  delay(1000);
 }
